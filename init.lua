@@ -674,7 +674,6 @@ require('lazy').setup({
         -- clangd = {},
         -- gopls = {},
         pyright = {},
-        csharp_ls = {},
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -717,6 +716,7 @@ require('lazy').setup({
       local ensure_installed = vim.tbl_keys(servers or {})
       vim.list_extend(ensure_installed, {
         'stylua', -- Used to format Lua code
+        'omnisharp',
       })
       require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
@@ -730,7 +730,38 @@ require('lazy').setup({
             -- by the server configuration above. Useful when disabling
             -- certain features of an LSP (for example, turning off formatting for ts_ls)
             server.capabilities = vim.tbl_deep_extend('force', {}, capabilities, server.capabilities or {})
-            require('lspconfig')[server_name].setup(server)
+            if server_name == 'omnisharp' then
+              require('lspconfig').omnisharp.setup {
+                root_dir = function(fname)
+                  local lspconfig = require 'lspconfig'
+                  local primary = lspconfig.util.root_pattern '*.sln'(fname)
+                  local fallback = lspconfig.util.root_pattern '*.csproj'(fname)
+                  return primary or fallback
+                end,
+                enable_roslyn_analyzers = true,
+                organize_imports_on_format = true,
+                enable_import_completion = true,
+                settings = {
+                  RoslynExtensionsOptions = {
+                    -- Enables support for roslyn analyzers, code fixes and rulesets.
+                    EnableAnalyzersSupport = true,
+                    -- Enables support for showing unimported types and unimported extension
+                    -- methods in completion lists. When committed, the appropriate using
+                    -- directive will be added at the top of the current file. This option can
+                    -- have a negative impact on initial completion responsiveness,
+                    -- particularly for the first few completion sessions after opening a
+                    -- solution.
+                    EnableImportCompletion = true,
+                    -- Only run analyzers against open files when 'enableRoslynAnalyzers' is
+                    -- true
+                    AnalyzeOpenDocumentsOnly = nil,
+                    -- Decompilation support
+                  },
+                },
+              }
+            else
+              require('lspconfig')[server_name].setup(server)
+            end
           end,
         },
       }
@@ -847,17 +878,12 @@ require('lazy').setup({
           --  This will auto-import if your LSP supports it.
           --  This will expand snippets if the LSP sent a snippet.
           ['<C-y>'] = cmp.mapping.confirm { select = true },
-
-          -- If you prefer more traditional completion keymaps,
-          -- you can uncomment the following lines
-          --['<CR>'] = cmp.mapping.confirm { select = true },
-          --['<Tab>'] = cmp.mapping.select_next_item(),
-          --['<S-Tab>'] = cmp.mapping.select_prev_item(),
+          ['<CR>'] = cmp.mapping.confirm { select = true },
 
           -- Manually trigger a completion from nvim-cmp.
           --  Generally you don't need this, because nvim-cmp will display
           --  completions whenever it has completion options available.
-          ['<C-Space>'] = cmp.mapping.complete {},
+          ['<C-k>'] = cmp.mapping.complete {},
 
           -- Think of <c-l> as moving to the right of your snippet expansion.
           --  So if you have a snippet that's like:
@@ -1012,8 +1038,9 @@ require('lazy').setup({
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns',
 
+  -- Plugin for github actions
   {
-    'tpope/vim-fugitive', -- Install Vim Fugitive
+    'tpope/vim-fugitive',
   },
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
