@@ -174,7 +174,7 @@ vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, { desc = 'Open diagn
 -- Open a window as its own tab
 vim.keymap.set('n', '<leader>an', ':tab split<CR>', { noremap = true, silent = true, desc = 'Open current split area in its own tab' })
 -- Open a window in current tab
-vim.keymap.set('n', '<leader>am', '<C-w>_<C-w|>', { noremap = true, silent = true, desc = 'Maximise current split area' })
+vim.keymap.set('n', '<leader>am', '<C-w>o', { noremap = true, silent = true, desc = 'Maximise current split area' })
 
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
@@ -345,6 +345,7 @@ require('lazy').setup({
         { '<leader>d', group = '[D]ocument' },
         { '<leader>r', group = '[R]ename' },
         { '<leader>s', group = '[S]earch' },
+        { '<leader>g', group = '[G]it' },
         { '<leader>a', group = '[A]rea' },
         { '<leader>w', group = '[W]orkspace' },
         { '<leader>t', group = '[T]oggle' },
@@ -1047,7 +1048,9 @@ require('lazy').setup({
   -- Plugin for github actions
   {
     'tpope/vim-fugitive',
-    vim.keymap.set('n', '<leader>ho', ':G<CR>', { noremap = true, silent = true, desc = 'Open fugitive terminal' }),
+    vim.keymap.set('n', '<leader>go', ':G<CR>', { noremap = true, silent = true, desc = 'Open fugitive terminal' }),
+    vim.keymap.set('n', '<leader>gO', ':G<CR><C-w>o', { noremap = true, silent = true, desc = 'Open fugitive terminal full screen' }),
+    vim.keymap.set('n', '<leader>gb', ':Git branch<CR>', { noremap = true, silent = true, desc = 'Get all branches' }),
   },
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
