@@ -176,6 +176,9 @@ vim.keymap.set('n', '<leader>an', ':tab split<CR>', { noremap = true, silent = t
 -- Open a window in current tab
 vim.keymap.set('n', '<leader>am', '<C-w>o', { noremap = true, silent = true, desc = 'Maximise current split area' })
 
+-- Search for highlighted text
+vim.keymap.set('v', '<leader>s', 'y/<C-r>"<CR>', { noremap = true, silent = true, desc = 'Search for highlited word' })
+
 -- Exit terminal mode in the builtin terminal with a shortcut that is a bit easier
 -- for people to discover. Otherwise, you normally need to press <C-\><C-n>, which
 -- is not what someone will guess without a bit more experience.
