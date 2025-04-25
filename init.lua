@@ -694,6 +694,15 @@ require('lazy').setup({
         ts_ls = {},
         --
 
+        ltex = {
+          settings = {
+            ltex = {
+              language = 'en-US', -- change to your preferred locale if needed You can also specify additional dictionaries or disable rules here
+            },
+          },
+          filetypes = { 'markdown', 'text', 'tex' }, -- Enable for .txt and related files
+        },
+
         lua_ls = {
           -- cmd = { ... },
           -- filetypes = { ... },
