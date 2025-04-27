@@ -21,7 +21,7 @@ return {
       }
 
       dashboard.section.buttons.val = {
-        dashboard.button('f', '  Open Last File', ':Telescope oldfiles<CR>'),
+        dashboard.button('l', '  Open Last File', ':Telescope oldfiles<CR>'),
         dashboard.button('f', '  Find File', ':Telescope find_files<CR>'),
         dashboard.button('h', '󰛢  Open Harpoon', '<leader>mo'),
         dashboard.button('g', '  Open Git', '<leader>go'),
