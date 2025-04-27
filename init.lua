@@ -964,7 +964,7 @@ require('lazy').setup({
     'folke/tokyonight.nvim',
     priority = 1000, -- Make sure to load this before all the other start plugins.
     config = function()
-      --@diagnostic disable-next-line: missing-fields
+      ---@diagnostic disable-next-line: missing-fields
       require('tokyonight').setup {
         styles = {
           comments = { italic = false }, -- Disable italics in comments
@@ -1059,6 +1059,7 @@ require('lazy').setup({
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns',
+  require 'custom.plugins.init',
 
   -- Plugin for github actions
   {
@@ -1267,15 +1268,6 @@ require('lazy').setup({
           end
         end,
       })
-    end,
-  },
-
-  {
-    'ThePrimeagen/harpoon',
-    config = function()
-      require('harpoon').setup() -- Optional: you can configure it if needed
-      vim.keymap.set('n', '<leader>mo', ':lua require("harpoon.ui").toggle_quick_menu()<CR>', { noremap = true, silent = true, desc = 'Open harpoon UI' })
-      vim.keymap.set('n', '<leader>ma', ':lua require("harpoon.mark").add_file()<CR>', { noremap = true, silent = true, desc = 'Open harpoon UI' })
     end,
   },
 
