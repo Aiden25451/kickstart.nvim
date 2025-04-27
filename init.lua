@@ -426,6 +426,13 @@ require('lazy').setup({
             require('telescope.themes').get_dropdown(),
           },
         },
+
+        defaults = {
+          file_ignore_patterns = {
+            '.git/*', -- Ignore the .git folder and everything in it
+            'node_modules/*', -- Optional: Ignore node_modules
+          },
+        },
       }
 
       -- Enable Telescope extensions if they are installed
