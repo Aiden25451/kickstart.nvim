@@ -692,10 +692,19 @@ require('lazy').setup({
       --  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
       --  - settings (table): Override the default settings passed when initializing the server.
       --        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+      vim.keymap.set('n', '<Leader>ce', ':lua vim.diagnostic.open_float()<CR>', { noremap = true, silent = true, desc = 'Explain the error' })
       local servers = {
         -- clangd = {},
         -- gopls = {},
         pyright = {},
+
+        harper_ls = {
+          filetypes = { 'markdown', 'text', 'gitcommit' },
+          settings = {
+            userDictPath = '~/.config/harper-ls/dict.txt',
+          },
+        },
+
         -- rust_analyzer = {},
         -- ... etc. See `:help lspconfig-all` for a list of all the pre-configured LSPs
         --
@@ -705,15 +714,6 @@ require('lazy').setup({
         -- But for many setups, the LSP (`ts_ls`) will work just fine
         ts_ls = {},
         --
-
-        ltex = {
-          settings = {
-            ltex = {
-              language = 'en-US', -- change to your preferred locale if needed You can also specify additional dictionaries or disable rules here
-            },
-          },
-          filetypes = { 'markdown', 'text', 'tex' }, -- Enable for .txt and related files
-        },
 
         lua_ls = {
           -- cmd = { ... },
@@ -955,38 +955,6 @@ require('lazy').setup({
     end,
   },
 
-  { -- You can easily change to a different colorscheme.
-    -- Change the name of the colorscheme plugin below, and then
-    -- change the command in the config to whatever the name of that colorscheme is.
-    --
-    -- If you want to see what colorschemes are already installed, you can use `:Telescope colorscheme`.
-    -- {
-    --   'sainnhe/gruvbox-material',
-    --   lazy = false,
-    --   priority = 1000,
-    --   config = function()
-    --     vim.g.gruvbox_material_enable_italic = true
-    --     vim.cmd.colorscheme 'gruvbox-material'
-    --   end,
-    -- },
-
-    'folke/tokyonight.nvim',
-    priority = 1000, -- Make sure to load this before all the other start plugins.
-    config = function()
-      ---@diagnostic disable-next-line: missing-fields
-      require('tokyonight').setup {
-        styles = {
-          comments = { italic = false }, -- Disable italics in comments
-        },
-      }
-
-      -- Load the colorscheme here.
-      -- Like many other themes, this one has different styles, and you could load
-      -- any other, such as 'tokyonight-storm', 'tokyonight-moon', or 'tokyonight-day'.
-      vim.cmd.colorscheme 'tokyonight-storm'
-    end,
-  },
-
   -- Highlight todo, notes, etc in comments
   { 'folke/todo-comments.nvim', event = 'VimEnter', dependencies = { 'nvim-lua/plenary.nvim' }, opts = { signs = false } },
 
@@ -1071,6 +1039,7 @@ require('lazy').setup({
   require 'custom.plugins.harpoon',
   require 'custom.plugins.dashboard',
   require 'custom.plugins.html-autopairs',
+  require 'custom.plugins.colorscheme',
 
   -- Plugin for github actions
   {
