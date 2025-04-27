@@ -4,4 +4,5 @@
 -- See the kickstart.nvim README for more information
 return {
   require 'lua.custom.plugins.harpoon',
+  require 'lua.custom.plugins.dashboard',
 }
