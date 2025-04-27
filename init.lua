@@ -729,6 +729,8 @@ require('lazy').setup({
             },
           },
         },
+
+        html = {},
       }
 
       -- Ensure the servers and tools above are installed
@@ -1066,7 +1068,9 @@ require('lazy').setup({
   require 'kickstart.plugins.autopairs',
   require 'kickstart.plugins.neo-tree',
   require 'kickstart.plugins.gitsigns',
-  require 'custom.plugins.init',
+  require 'custom.plugins.harpoon',
+  require 'custom.plugins.dashboard',
+  require 'custom.plugins.html-autopairs',
 
   -- Plugin for github actions
   {
