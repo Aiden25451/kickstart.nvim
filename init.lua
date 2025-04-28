@@ -83,18 +83,26 @@ I hope you enjoy your Neovim journey,
 
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
+vim.opt.cmdheight = 0
 
-vim.o.cmdheight = 0 -- No space for the command-line initially
-vim.cmd [[
-  augroup CmdHeight
-    autocmd!
-    " Make cmdheight 1 when entering command mode
-    autocmd CmdlineEnter * set cmdheight=1
-    " Restore cmdheight back to 0 when leaving command mode
-    autocmd CmdlineLeave * set cmdheight=0
-  augroup END
-]]
+vim.api.nvim_create_autocmd('CmdlineEnter', {
+  group = vim.api.nvim_create_augroup('cmdheight_1_on_cmdlineenter', { clear = true }),
+  desc = "Don't hide the status line when typing a command",
+  command = ':set cmdheight=1',
+})
 
+vim.api.nvim_create_autocmd('CmdlineLeave', {
+  group = vim.api.nvim_create_augroup('cmdheight_0_on_cmdlineleave', { clear = true }),
+  desc = 'Hide cmdline when not typing a command',
+  command = ':set cmdheight=0',
+})
+
+vim.api.nvim_create_autocmd('BufWritePost', {
+  group = vim.api.nvim_create_augroup('hide_message_after_write', { clear = true }),
+  desc = 'Get rid of message after writing a file',
+  pattern = { '*' },
+  command = 'redrawstatus',
+})
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
