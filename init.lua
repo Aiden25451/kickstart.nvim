@@ -84,6 +84,17 @@ I hope you enjoy your Neovim journey,
 P.S. You can delete this when you're done too. It's your config now! :)
 --]]
 
+vim.o.cmdheight = 0 -- No space for the command-line initially
+vim.cmd [[
+  augroup CmdHeight
+    autocmd!
+    " Make cmdheight 1 when entering command mode
+    autocmd CmdlineEnter * set cmdheight=1
+    " Restore cmdheight back to 0 when leaving command mode
+    autocmd CmdlineLeave * set cmdheight=0
+  augroup END
+]]
+
 -- Set <space> as the leader key
 -- See `:help mapleader`
 --  NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
@@ -725,8 +736,8 @@ require('lazy').setup({
   --
   --  Here are some example plugins that I've included in the Kickstart repository.
   --  Uncomment any of the lines below to enable them (you will need to restart nvim).
-  --
-  -- require 'kickstart.plugins.debug',
+
+  require 'kickstart.plugins.debug',
   require 'kickstart.plugins.indent_line',
   require 'kickstart.plugins.lint',
   require 'kickstart.plugins.autopairs',
@@ -738,6 +749,13 @@ require('lazy').setup({
   require 'custom.plugins.colorscheme',
   require 'custom.plugins.lsp',
   require 'custom.plugins.fugitive',
+  {
+    'nvim-lualine/lualine.nvim',
+    dependencies = { 'nvim-tree/nvim-web-devicons' },
+    config = function()
+      require 'custom.plugins.lualine'
+    end,
+  },
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
