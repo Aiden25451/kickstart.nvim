@@ -21,11 +21,11 @@ return {
       }
 
       dashboard.section.buttons.val = {
-        dashboard.button('l', '  Open Last File', ':Telescope oldfiles<CR>'),
-        dashboard.button('f', '  Find File', ':Telescope find_files<CR>'),
-        dashboard.button('h', '󰛢  Open Harpoon', '<leader>mo'),
-        dashboard.button('g', '  Open Git', '<leader>go'),
-        dashboard.button('m', '  Map It Out', '<leader>sm'),
+        dashboard.button('space s.', '  Open Last File', ':Telescope oldfiles<CR>'),
+        dashboard.button('space sf', '  Find File', ':Telescope find_files<CR>'),
+        dashboard.button('space mo', '󰛢  Open Harpoon', '<leader>mo'),
+        dashboard.button('space go', '  Open Git', '<leader>go'),
+        dashboard.button('space sm', '  Map It Out', '<leader>sm'),
         dashboard.button('q', '  Quit', ':q<CR>'),
       }
 
