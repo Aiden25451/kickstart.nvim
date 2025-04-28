@@ -29,9 +29,19 @@ return {
         dashboard.button('q', '  Quit', ':q<CR>'),
       }
 
-      dashboard.section.footer.val = {
-        'YOU GOT THIS!!!',
-      }
+      local home = os.getenv 'HOME'
+      local filePath = home .. '/Documents/mental-cache/todo.txt'
+      local content = {}
+
+      local file = io.open(filePath, 'r')
+      if file then
+        for line in file:lines() do
+          table.insert(content, line)
+        end
+        file:close()
+      end
+
+      dashboard.section.footer.val = content
 
       alpha.setup(dashboard.config)
     end,

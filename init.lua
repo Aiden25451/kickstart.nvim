@@ -497,7 +497,7 @@ require('lazy').setup({
       end, { desc = '[S]earch [N]eovim files' })
 
       vim.keymap.set('n', '<leader>sm', function()
-        builtin.find_files { cwd = '~/Code/mental' }
+        builtin.find_files { cwd = '~/Documents/mental-cache' }
       end, { desc = '[S]earch [M]ental cache files' })
     end,
   },
