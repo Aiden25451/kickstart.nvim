@@ -21,6 +21,11 @@ return {
       window = {
         mappings = {
           ['\\'] = 'close_window',
+          ['B'] = function(state)
+            local node = state.tree:get_node()
+            local path = node.path
+            vim.fn.jobstart({ 'open', path }, { detach = true })
+          end,
         },
       },
     },
