@@ -794,6 +794,30 @@ require('lazy').setup({
       },
     },
   },
+  {
+    'folke/zen-mode.nvim',
+    opts = {
+      window = {
+        width = 120, -- Adjust width as needed
+        options = {
+          wrap = true,
+          linebreak = true,
+          breakindent = true,
+        },
+      },
+    },
+    config = function()
+      vim.keymap.set('n', '<leader>z', ':ZenMode<CR>', { noremap = true, silent = true, desc = 'Open file in [z]en mode' })
+
+      vim.api.nvim_create_autocmd('FileType', {
+        pattern = { 'text' },
+        callback = function()
+          vim.keymap.set('n', 'j', 'gj', { buffer = true })
+          vim.keymap.set('n', 'k', 'gk', { buffer = true })
+        end,
+      })
+    end,
+  },
 
   -- NOTE: The import below can automatically add your own plugins, configuration, etc from `lua/custom/plugins/*.lua`
   --    This is the easiest way to modularize your config.
