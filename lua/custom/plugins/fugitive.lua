@@ -171,7 +171,7 @@ return {
         local first_line = vim.api.nvim_buf_get_lines(buf, 0, 1, false)[1]
         local buf_name = vim.api.nvim_buf_get_name(buf)
 
-        if first_line and first_line:match '^%s*[%*%w]' and buf_name:find 'private' then
+        if first_line and first_line:match '^%s*[%*%w]' then
           vim.keymap.set('n', 'd', DeleteGitBranchUnderCursor, {
             buffer = true,
             desc = 'Delete Git branch under cursor',
